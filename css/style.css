@@ -1,4 +1,31 @@
 body{
+    background-color: #333;
+}
+table{
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+td{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 10px solid black;
+}
+.yellow{
+    background-color: #ffd915;
+}
+.red{
+    background-color: red;
+}
+.black{
     background-color: black;
-    color: white;
+}
+.blue{
+    background-color: blue;
+}
+.rowfix{
+    height: 110px;
+}
+.colfix{
+    width: 110px;
 }
