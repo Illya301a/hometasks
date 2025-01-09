@@ -2,3 +2,10 @@ body{
     background-color: black;
     color: white;
 }
+a{
+    color: white;
+}
+a:hover{
+    background-color: white;
+    color: black;
+}
