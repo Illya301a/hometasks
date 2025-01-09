@@ -1,0 +1,20 @@
+.block {
+    display: block;
+    background-color: #ffb700;
+    margin: 10px;
+    padding: 10px;
+}
+.inline {
+    display: inline;
+    background-color: #222;
+    color: #fff;
+    margin: 5px;
+}
+.flex {
+    display: flex;
+    justify-content: space-around;
+    background-color: #000;
+    color: #ffb700;
+    padding: 10px;
+    gap: 10px;
+}

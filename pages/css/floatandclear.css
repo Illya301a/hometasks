@@ -1,0 +1,13 @@
+.float-left {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background-color: #ffb700;
+    margin: 10px;
+}
+.clear {
+    clear: both;
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+}
