@@ -2,3 +2,24 @@ body{
     background-color: black;
     color: white;
 }
+
+svg{
+    display: block;
+    margin: 20px auto;
+}
+
+.animated-circle{
+    animation: colorChange 2s infinite alternate;
+}
+
+@keyframes colorChange{
+    0% {
+        fill: red;
+        stroke: blue;
+    }
+    
+    100% {
+        fill: yellow;
+        stroke: green;
+    }
+}
