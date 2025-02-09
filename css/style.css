@@ -16,6 +16,7 @@
 
 body{
     background-color: var(--color-light-gray);
+    overflow-x: hidden;
 }
 
 .header{
