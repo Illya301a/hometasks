@@ -5,11 +5,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <ul class="navbar__list">
+                    <li class="navbar__list-item navbar__list-item--active">Главная</li>
+                    <li class="navbar__list-item">Об авторе</li>
+                    <li class="navbar__list-item">Работы</li>
+                    <li class="navbar__list-item">Процесс</li>
+                    <li class="navbar__list-item">Контакты</li>
+                </ul>
+            </nav>
+            <h1 class="header__title">Дизайн и верстка</h1>
 
+            <p class="text-description">Lorem Ipsum - это текст-"рыба", часто используемый в печати и
+                вэб-дизайне.
+                Lorem Ipsum является
+                стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
+
+            <button class="header__button">Написать мне</button>
+        </div>
+    </header>
+    <main>
+        <section class="about-me">
+            <div class="container">
+                <h2>Обо мне</h2>
+                <p class="text-description about-me__description">Lorem Ipsum - это текст-"рыба", часто используемый в
+                    печати и
+                    вэб-дизайне.
+                    Lorem Ipsum является
+                    стандартной "рыбой" для текстов на латинице с начала XVI века.</p>
+            </div>
+        </section>
+        <section class="projects">
+            <div class="container">
+                <div class="projects__items">
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+                    <div class="projects__item">
+                        <span class="projects__item-title">40+</span> <br>
+                        <span class="projects__item-subtitle">проектов</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <section class="about-work">
+            <div class="container">
+                <div class="about-work__content"></div>
+                <h2>Как я работаю</h2>
+                <p class="text-description about-me__description">Lorem Ipsum - это текст-"рыба", часто используемый в
+                    печати и
+                    вэб-дизайне.
+                    Lorem Ipsum является
+                    стандартной "рыбой" для текстов на латинице с начала XVI века.
+                </p>
+                <iframe src="https://www.youtube.com/embed/1dPi64tT1go?si=61r-qJIh1xiw_x99" title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <h3>Иванов Иван</h3>
+                <p class="footer__content-copyright">(с) 2018. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
