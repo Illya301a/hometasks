@@ -142,3 +142,40 @@ iframe{
     line-height: 21px;
     font-size: 13px;
 }
+
+@media (max-width: 992px){
+    .projects__items{
+        height: 220px;
+        flex-flow: column wrap;
+        justify-content: space-between;
+        align-content: space-evenly;
+    }
+}
+
+@media (max-width: 768px){
+    .navbar__list-item{
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px){
+    .header{
+       padding-top: 20px;
+    }
+    .navbar__list{
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .navbar{
+        margin-bottom: 25px;
+    }
+    .header__title{
+        font-size: 2rem;
+        text-align: center;
+    }
+    .projects__items{
+        height: 330px;
+        flex-flow: column wrap;
+    }
+}
