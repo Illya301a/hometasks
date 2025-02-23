@@ -5,10 +5,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 
 <body>
+    <header class="bg-stone-50">
+        <div class="container flex justify-between mx-auto py-10">
+            <div class="text-xl font-bold">TestProject</div>
+            <nav>
+                <ul class=" flex flex-row gap-5">
+                    <li class="hover:text-fuchsia-500 hover:underline"><a href="#"></a>Articles</li>
+                    <li class="hover:text-fuchsia-500 hover:underline"><a href="#">About</a></li>
+                    <li class="hover:text-fuchsia-500 hover:underline"><a href="#">Contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container mx-auto py-10">
+            <section>
+                <h1 class="text-2xl">TestProject</h1>
+                <p class="text-neutral-500 mt-5 tracking-wider line-clamp-3">Lorem ipsum dolor sit amet, consectetur
+                    adipisicing elit.
+                    Molestias,
+                    ratione
+                    excepturi error corporis
+                    aperiam nulla voluptate? Illo quia voluptate minima maxime, nobis quaerat voluptatibus tenetur
+                    numquam
+                    ad odio ex neque?
+                    Fugiat deserunt repellendus ab qui consequuntur recusandae ad soluta. Sit ipsa maiores officiis
+                    molestiae quas fugiat similique quis laudantium quos. Similique amet ad asperiores esse incidunt
+                    quidem,
+                    quaerat corrupti corporis!
+                    Non deleniti officiis blanditiis laboriosam officia quod numquam natus impedit qui voluptatibus
+                    veritatis maiores, reprehenderit, voluptatem libero, ratione neque nesciunt voluptates nihil enim
+                    voluptate rerum. Exercitationem, excepturi animi! Animi, dolores!
+                    Autem aut consectetur eveniet deserunt pariatur fuga iste voluptates dicta totam voluptatibus,
+                    aspernatur nemo earum aperiam suscipit reiciendis tempora ex? Ipsam voluptas voluptate repudiandae
+                    maiores sint fugit harum consequatur labore?</p>
+            </section>
+            <section>
+                <img class="size-50 float-left p-3" src="photos/coin.gif" alt="coin">
+                <p class="text-neutral-500 mt-5 tracking-wider py-3">
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin coin
+                    coin coin coin coin
+                </p>
+            </section>
+
+            <hr class="my-10">
+            <section>
+                <div class="grid grid-cols-2 gap-4">
+                    <table class="border-collapse border border-gray-400 w-full text-center">
+                        <thead>
+                            <tr>
+                                <th class="border border-gray-300">State</th>
+                                <th class="border border-gray-300">City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300">Indiana</td>
+                                <td class="border border-gray-300">Indianapolis</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300">Ohio</td>
+                                <td class="border border-gray-300">Columbus</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300">Michigan</td>
+                                <td class="border border-gray-300">Detroit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="border-collapse border border-gray-400 w-full text-center">
+                        <thead>
+                            <tr>
+                                <th class="border border-gray-300">State</th>
+                                <th class="border border-gray-300">City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300">Indiana</td>
+                                <td class="border border-gray-300">Indianapolis</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300">Ohio</td>
+                                <td class="border border-gray-300">Columbus</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300">Michigan</td>
+                                <td class="border border-gray-300">Detroit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <hr class="my-10">
+            <section>
+                <img class="aspect-video w-full shadow-2xl shadow-sky-950 mx-auto transition duration-300 hover:brightness-50"
+                    src="photos/winter.gif" alt="winter">
+            </section>
+        </div>
+    </main>
+
+
+
+
+    <footer class="flex flex-col items-center bg-stone-50 text-center text-surface mt-10">
+        <div class="container p-6">
+            <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/111.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/112.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/114.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/115.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/116.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full bg-black/5 p-4 text-center">
+            © 2025 Copyright:
+            <a href="#">AndrelukaIllia</a>
+        </div>
+    </footer>
+
 
 </body>
 
