@@ -91,15 +91,19 @@ console.log(counterFactory.value()) // 201
  * console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
  */
 
-const myPrint = (a, b, res) => {`${a}^${b}=${res}`}
-const myPow = (a, b, myPrint) => {
-        const res = a ^ b 
-        return myPrint(a, b, res)
+function myPrint(a, b, res) {
+  return `${a}^${b}=${res}`
+}
+
+function myPow(a, b, myPrint) {
+  if (b === 0) return myPrint(a, b, 1)
+  if (b < 0) return myPrint(a, b, 1 / Math.pow(a, -b)) //ура оно работает!!!
+  return myPrint(a, b, Math.pow(a, b))
 }
 
 console.log(myPow(3, 4, myPrint)) // 3^4=81
 console.log(myPow(2, 3, myPrint)) // 2^3=8
-console.log(myPow(2, 0, myPrint)) // 2^0=1
+console.log(myPow(2, 0, myPrint))  // 2^0=1
 console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
 
 
