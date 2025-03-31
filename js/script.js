@@ -135,7 +135,7 @@ const myMul = (a, b) => a * b
  * Функція повертає результат обчислення.
  */
 
-const myDouble = (n) => myNul.bind(n, 2)
+const myDouble = (n) => myMul.bind(n, 2)
 
 console.log(myDouble(3)) // = myMul(2, 3) = 6
 console.log(myDouble(4)) // = myMul(2, 4) = 8
@@ -143,7 +143,7 @@ console.log(myDouble(5)) // = myMul(2, 5) = 10
 
 // Аналогічним чином створюємо функцію myTriple(n), яка потроює параметр, що приймає, повертаючи результат.
 
-const myTriple = (n) => myNul.bind(n, 3)
+const myTriple = (n) => myMul.bind(n, 3)
 
 console.log(myTriple(3)) // = myMul(3, 3) = 9
 console.log(myTriple(4)) // = myMul(3, 4) = 12
