@@ -1,146 +1,92 @@
-console.log('#5. JavaScript homework example file')
+console.log('#6. JavaScript homework example file')
 
 /*
  * #1
+ * Задача: Калькулятор калорійності продуктів через клас.
+ * Завдання: Розробити модуль на JavaScript, який імплементує клас CalorieCalculator. Клас має використовувати Map для управління даними про калорійність продуктів. Необхідно реалізувати наступні функціональності:
+ * Додавання продуктів: Метод addProduct приймає назву продукту та його калорійність, додаючи їх до колекції.
+ * Отримання калорійності продукту: Метод getProductCalories повертає калорійність продукту за його назвою. Якщо продукт не знайдено, повертає рядок 'Product not found'.
+ * Видалення продукту: Метод removeProduct видаляє продукт з колекції за назвою.
  *
- * Створіть функцію counter(), яка має реалізувати лічильник за допомогою замикання:
- * функція може приймати число як аргумент counter(n)
- * якщо число передано у функцію - лічба починається із зазначеного числа
- * якщо ні - то лічба триває
+ * Критерії перевірки:
+ * Клас CalorieCalculator має бути реалізований з використанням ключового слова class.
+ * Внутрішнє сховище продуктів має бути реалізоване за допомогою new Map().
+ * Наявність методів addProduct, getProductCalories, та removeProduct.
  */
 
-const counter = (() => {
-        let count = 0
+class CalorieCalculator {
+  constructor() {
+    this.products = new Map()
+  }
 
-        return (n) => {
-                if (n !== undefined) {
-                        count = n
-                }
-                return count++
-        }
-})()
+  addProduct() {
+    
+  }
 
-console.log(counter()) // 0
-console.log(counter()) // 1
-console.log(counter(100)) // 100
-console.log(counter()) // 101
-console.log(counter()) // 102
-console.log(counter(500)) // 500
-console.log(counter()) // 501
-console.log(counter()) // 502
-console.log(counter(0)) // 0
-console.log(counter()) // 0
-console.log(counter()) // 1
+  getProductCalories(productName) {
+    if (this.products.has(productName)) {
+      return this.products.get(productName)
+    } else {
+      return 'Product not found'
+    }
+  }
+
+  removeProduct(productName) {
+    // code here
+  }
+}
+
+// Демонстрація використання
+// const calorieCalculator = new CalorieCalculator()
+// calorieCalculator.addProduct('Apple', 52)
+// calorieCalculator.addProduct('Banana', 89)
+//
+// console.log(calorieCalculator.getProductCalories('Apple')) // 52
+// console.log(calorieCalculator.getProductCalories('Banana')) // 89
+//
+// calorieCalculator.removeProduct('Apple')
+// console.log(calorieCalculator.getProductCalories('Apple')) // Product not found
 
 /*
  * #2
+ * Задача: Унікальні користувачі.
+ * Завдання: Реалізувати модуль на JavaScript у формі класу UniqueUsernames, який використовує Set для збереження унікальних імен користувачів. Клас має надавати можливість:
+ * Додавання імен користувачів: Метод addUser дозволяє додати нове ім'я до набору. Якщо ім'я вже існує, воно не буде додано повторно, зберігаючи унікальність імен у наборі.
+ * Перевірка наявності імені: Метод exists перевіряє, чи існує задане ім'я серед збережених унікальних імен.
+ * Отримання кількості унікальних імен: Метод count повертає кількість унікальних імен, збережених у наборі.
  *
- * Створіть функцію counterFactory, яка має реалізувати три методи за допомогою замикання:
- * початкове значення лічильника - 0
- * counterFactory.value() - повертає значення лічильника
- * counterFactory.value(n) - встановлює значення лічильника, повертає нове значення
- * counterFactory.increment() - збільшує значення лічильника на 1
- * counterFactory.decrement() - зменшує значення лічильника на 1
+ * Критерії перевірки:
+ * Наявність методів addUser, exists, count у класі UniqueUsernames.
+ * Використання конструкції class для створення класу UniqueUsernames.
+ * Застосування new Set() для внутрішнього сховища імен користувачів у конструкторі класу.
  */
 
-const counterFactory = (() => {
-        let count = 0
+class UniqueUsernames {
+  constructor() {
+    // code here
+  }
 
-        return{
-                value(n){
-                        if (n !== undefined) {
-                                count = n
-                        }
-                        return count 
-                },
-                increment(){
-                        count++
-                },
-                decrement(){
-                        count--
-                }
-        }
-})()
+  addUser(username) {
+    // code here
+  }
 
-console.log(counterFactory.value()) // 0
-counterFactory.increment()
-counterFactory.increment()
-counterFactory.increment()
-console.log(counterFactory.value()) // 3
-counterFactory.decrement()
-counterFactory.decrement()
-console.log(counterFactory.value()) // 1
-console.log(counterFactory.value(100)) // 100
-counterFactory.decrement()
-console.log(counterFactory.value()) // 99
-console.log(counterFactory.value(200)) // 200
-counterFactory.increment()
-console.log(counterFactory.value()) // 201
+  exists(username) {
+    // code here
+  }
 
-/*
- * #3
- *
- * Створіть функцію myPow(a, b, myPrint). Всередині реалізуйте рекурсію для підрахунку результату піднесення числа a до ступеня b.
- * - Функція myPrint(a, b, res) - глобальна функція, що має генерувати з параметрів a, b, res рядок вигляду 'a^b=res' і повертати його.
- * - myPrint() має бути передана в myPow() як параметр і викликана всередині як callback-функція.
- * - функція myPow() як значення, що повертається, приймає результат myPrint().
- * Наприклад:
- * console.log(myPow(3, 4, myPrint)); // 3^4=81
- * console.log(myPow(2, 3, myPrint)); // 2^3=8
- * console.log(myPow(2, 0, myPrint))  // 2^0=1
- * console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
- */
-
-const myPrint = (a, b, res) => {`${a}^${b}=${res}`}
-const myPow = (a, b, myPrint) => {
-        const res = a ^ b 
-        return myPrint(a, b, res)
+  count() {
+    // code here
+  }
 }
 
-console.log(myPow(3, 4, myPrint)) // 3^4=81
-console.log(myPow(2, 3, myPrint)) // 2^3=8
-console.log(myPow(2, 0, myPrint)) // 2^0=1
-console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
+// Демонстрація використання
+// const uniqueUsernames = new UniqueUsernames()
+// uniqueUsernames.addUser('john_doe')
+// uniqueUsernames.addUser('jane_doe')
+// uniqueUsernames.addUser('john_doe') // Ця дія не змінить набір, оскільки 'john_doe' вже існує
+//
+// console.log(`Існує 'john_doe': ${uniqueUsernames.exists('john_doe')}`) // true
+// console.log(`Кількість унікальних імен: ${uniqueUsernames.count()}`) // 2
 
-
-/*
- * #4
- * Створіть функцію myMax(arr), яка як параметр приймає
- * довільний числовий масив і повертає максимальне число з переданого їй масиву.
- * У реалізації функції має бути застосовано метод Math.max() і apply().
- */
-
-const list = [12, 23, 100, 34, 56, 9, 233]
-const myMax = () => {
-        return Math.max.apply(null, list)
-}
-
-console.log(myMax(list)); // 233
-
-/*
- * #5
- *
- * Створіть функцію myMul(a, b), яка буде множити числа а і b, повертаючи результат.
- */
-
-const myMul = (a, b) => a * b
-
-/*
- * Створіть функції myDouble(n), яка приймає один параметр і подвоює його.
- * Використовувати множення або інші математичні операції всередині функції - заборонено, тільки bind() і myMul().
- * Функція повертає результат обчислення.
- */
-
-const myDouble = (n) => myNul.bind(n, 2)
-
-console.log(myDouble(3)) // = myMul(2, 3) = 6
-console.log(myDouble(4)) // = myMul(2, 4) = 8
-console.log(myDouble(5)) // = myMul(2, 5) = 10
-
-// Аналогічним чином створюємо функцію myTriple(n), яка потроює параметр, що приймає, повертаючи результат.
-
-const myTriple = (n) => myNul.bind(n, 3)
-
-console.log(myTriple(3)) // = myMul(3, 3) = 9
-console.log(myTriple(4)) // = myMul(3, 4) = 12
-console.log(myTriple(5)) // = myMul(3, 5) = 15
+// Експорт для використання в тестах
+export { CalorieCalculator, UniqueUsernames }
