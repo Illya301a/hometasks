@@ -1,4 +1,4 @@
-console.log('#6. JavaScript homework example file')
+console.log("#6. JavaScript homework example file")
 
 /*
  * #1
@@ -19,39 +19,37 @@ class CalorieCalculator {
     this.products = new Map()
   }
 
-  addProduct() {
-    
+  addProduct(productName, productCalories) {
+    return this.products.set(productName, productCalories)
   }
 
   getProductCalories(productName) {
-    if (this.products.has(productName)) {
-      return this.products.get(productName)
-    } else {
-      return 'Product not found'
-    }
+    return this.products.get(productName) ?? "Product not found"
   }
 
   removeProduct(productName) {
-    // code here
+    return this.products.delete(productName) ?? "Product not found"
   }
 }
 
 // Демонстрація використання
-// const calorieCalculator = new CalorieCalculator()
-// calorieCalculator.addProduct('Apple', 52)
-// calorieCalculator.addProduct('Banana', 89)
-//
-// console.log(calorieCalculator.getProductCalories('Apple')) // 52
-// console.log(calorieCalculator.getProductCalories('Banana')) // 89
-//
-// calorieCalculator.removeProduct('Apple')
-// console.log(calorieCalculator.getProductCalories('Apple')) // Product not found
+const calorieCalculator = new CalorieCalculator()
+calorieCalculator.addProduct('Apple', 52)
+calorieCalculator.addProduct('Banana', 89)
+
+console.log(calorieCalculator.getProductCalories('Apple')) // 52
+console.log(calorieCalculator.getProductCalories('Banana')) // 89
+
+calorieCalculator.removeProduct('Apple')
+console.log(calorieCalculator.getProductCalories('Apple')) // Product not found
 
 /*
  * #2
  * Задача: Унікальні користувачі.
- * Завдання: Реалізувати модуль на JavaScript у формі класу UniqueUsernames, який використовує Set для збереження унікальних імен користувачів. Клас має надавати можливість:
- * Додавання імен користувачів: Метод addUser дозволяє додати нове ім'я до набору. Якщо ім'я вже існує, воно не буде додано повторно, зберігаючи унікальність імен у наборі.
+ * Завдання: Реалізувати модуль на JavaScript у формі класу UniqueUsernames, який використовує Set для збереження унікальних імен користувачів. 
+ * Клас має надавати можливість:
+ * Додавання імен користувачів: Метод addUser дозволяє додати нове ім'я до набору. Якщо ім'я вже існує, воно не буде додано повторно, 
+ * зберігаючи унікальність імен у наборі.
  * Перевірка наявності імені: Метод exists перевіряє, чи існує задане ім'я серед збережених унікальних імен.
  * Отримання кількості унікальних імен: Метод count повертає кількість унікальних імен, збережених у наборі.
  *
@@ -62,31 +60,28 @@ class CalorieCalculator {
  */
 
 class UniqueUsernames {
-  constructor() {
-    // code here
+  constructor(){
+    this.users = new Set()
   }
 
-  addUser(username) {
-    // code here
+  addUser(newName){
+    this.users.add(newName)
   }
 
-  exists(username) {
-    // code here
+  exists(name){
+    return this.users.has(name)
   }
 
-  count() {
-    // code here
+  count(){
+    return this.users.size
   }
 }
 
 // Демонстрація використання
-// const uniqueUsernames = new UniqueUsernames()
-// uniqueUsernames.addUser('john_doe')
-// uniqueUsernames.addUser('jane_doe')
-// uniqueUsernames.addUser('john_doe') // Ця дія не змінить набір, оскільки 'john_doe' вже існує
-//
-// console.log(`Існує 'john_doe': ${uniqueUsernames.exists('john_doe')}`) // true
-// console.log(`Кількість унікальних імен: ${uniqueUsernames.count()}`) // 2
+const uniqueUsernames = new UniqueUsernames()
+uniqueUsernames.addUser('john_doe')
+uniqueUsernames.addUser('jane_doe')
+uniqueUsernames.addUser('john_doe') // Ця дія не змінить набір, оскільки 'john_doe' вже існує
 
-// Експорт для використання в тестах
-export { CalorieCalculator, UniqueUsernames }
+console.log(`Існує 'john_doe': ${uniqueUsernames.exists('john_doe')}`) // true
+console.log(`Кількість унікальних імен: ${uniqueUsernames.count()}`) // 2
