@@ -54,24 +54,30 @@ console.log('Подвоєні елементи масиву:', doubledArray) // 
 class SkillsManager {
   constructor(){
         this.skills = []
-
-        addSkill(skill){
-                
-        }
+  }
+  addSkill(skill){
+        if (typeof skill === 'string' && skill.length >= 2) {
+            this.skills.push(skill)
+            return skill
+        } else return null
+  }
+  getAllSkills(){
+        return this.skills
   }
 }
 
-// const skillsManager = new SkillsManager()
-//
-// console.log(skillsManager.addSkill('JavaScript'))
-// console.log(skillsManager.addSkill('CSS'))
-// console.log(skillsManager.getAllSkills())
+const skillsManager = new SkillsManager()
+
+console.log(skillsManager.addSkill('JavaScript'))
+console.log(skillsManager.addSkill('CSS'))
+console.log(skillsManager.getAllSkills())
 
 
 /*
  * #4
  * Задача: Калькулятор дат.
- * Завдання: Створити модуль на JavaScript, який імплементує функцію-конструктор DateCalculator для створення об'єктів, здатних керувати датами. Калькулятор дат має надавати такі можливості:
+ * Завдання: Створити модуль на JavaScript, який імплементує функцію-конструктор DateCalculator для створення об'єктів, 
+ * здатних керувати датами. Калькулятор дат має надавати такі можливості:
  * Додавання днів: Метод addDays приймає кількість днів як аргумент і додає цю кількість до поточної дати об'єкта.
  * Віднімання днів: Метод subtractDays приймає кількість днів як аргумент і віднімає цю кількість від поточної дати об'єкта.
  * Отримання результату: Метод getResult повертає поточну дату об'єкта у форматі "YYYY-MM-DD".
@@ -83,25 +89,32 @@ class SkillsManager {
  */
 
 function DateCalculator(initialDate) {
-  this.addDays = function(days) {
-    // code here
-  }
+        this.date = new Date(initialDate)
 
-  this.subtractDays = function(days) {
-    // code here
-  }
+        this.addDays = function(days) {
+                if (typeof days !== 'number' || days < 0) throw new Error("Invalid argument")
+                this.date.setDate(this.date.getDate() + days)
+        }
 
-  this.getResult = function() {
-    // code here
-  }
+        this.subtractDays = function(days) {
+                if (typeof days !== 'number' || days < 0) throw new Error("Invalid argument")
+                this.date.setDate(this.date.getDate() - days)
+        }
+
+        this.getResult = function() {
+                const year = this.date.getFullYear()
+                const month = String(this.date.getMonth() + 1).padStart(2, '0')
+                const day = String(this.date.getDate()).padStart(2, '0')
+                return `${year}-${month}-${day}`
+        }
 }
 
 // Демонстрація використання
-// const dateCalculator = new DateCalculator('2023-01-01')
-// dateCalculator.addDays(5)
-// console.log(dateCalculator.getResult()) // Виводить нову дату після додавання днів
-//
-// dateCalculator.subtractDays(3)
-// console.log(dateCalculator.getResult()) // Виводить нову дату після віднімання днів
+const dateCalculator = new DateCalculator('2023-01-01')
+dateCalculator.addDays(5)
+console.log(dateCalculator.getResult()) // Виводить нову дату після додавання днів
+
+dateCalculator.subtractDays(3)
+console.log(dateCalculator.getResult()) // Виводить нову дату після віднімання днів
 
 // export { doubleArrayElements, sumArray, SkillsManager, DateCalculator }
