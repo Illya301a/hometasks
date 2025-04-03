@@ -6,13 +6,13 @@
 */
 
 function sumArray(numbers) {
-  // code here
+        return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 }
 
 // Використання функції
-// const exampleArray = [1, 2, 3, 4, 5]
-// const sum = sumArray(exampleArray)
-// console.log('Сума елементів масиву:', sum) // Виведення суми
+const exampleArray = [1, 2, 3, 4, 5]
+const sum = sumArray(exampleArray)
+console.log('Сума елементів масиву:', sum) // Виведення суми
 
 
 /*
@@ -22,13 +22,13 @@ function sumArray(numbers) {
 */
 
 function doubleArrayElements(numbers) {
-  // code here
+        return numbers.map(number => number * 2)
 }
 
 // Використання функції
-// const exampleArray = [1, 2, 3, 4, 5]
-// const doubledArray = doubleArrayElements(exampleArray)
-// console.log('Подвоєні елементи масиву:', doubledArray) // Виведення подвоєних елементів
+const exampleArray1 = [1, 2, 3, 4, 5]
+const doubledArray = doubleArrayElements(exampleArray1)
+console.log('Подвоєні елементи масиву:', doubledArray) // Виведення подвоєних елементів
 
 
 /*
@@ -52,7 +52,13 @@ function doubleArrayElements(numbers) {
 */
 
 class SkillsManager {
-  // code here
+  constructor(){
+        this.skills = []
+
+        addSkill(skill){
+                
+        }
+  }
 }
 
 // const skillsManager = new SkillsManager()
@@ -98,4 +104,4 @@ function DateCalculator(initialDate) {
 // dateCalculator.subtractDays(3)
 // console.log(dateCalculator.getResult()) // Виводить нову дату після віднімання днів
 
-export { doubleArrayElements, sumArray, SkillsManager, DateCalculator }
+// export { doubleArrayElements, sumArray, SkillsManager, DateCalculator }
