@@ -1,120 +1,88 @@
+console.log('#9. JavaScript homework example file')
+
 /*
  * #1
  *
- * Розробити функцію, яка використовує метод reduce масиву для обчислення суми усіх елементів масиву чисел.
- Функція повинна приймати масив чисел та повертати їх суму.
-*/
+ * Задача: Відстежування кліку на кнопку та виведення повідомлення
+ * Мета: Розробити функцію, яка призначає обробник події кліку на кнопку з певним ID і виводить у консоль заздалегідь визначене повідомлення при кожному кліку на кнопку.
+ *
+ * Вимоги:
+ * 1. Функція має приймати два параметри:
+ *    - buttonId (рядок) - ID кнопки, на яку потрібно встановити обробник події.
+ *    - message (рядок) - повідомлення, яке буде виводитись у консоль при кліку на кнопку.
+ * 2. Функція має знайти кнопку за допомогою buttonId і призначити їй обробник події кліку.
+ * 3. При кліку на кнопку у консоль має виводитись задане message.
+ * 4. Функція має бути експортована для подальшого використання і тестування.
+ *
+ */
 
-function sumArray(numbers) {
-        return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+function handleButtonClick(buttonId, message) {
+  document.getElementById(buttonId).addEventListener("click", () => {alert(message)})
 }
 
-// Використання функції
-const exampleArray = [1, 2, 3, 4, 5]
-const sum = sumArray(exampleArray)
-console.log('Сума елементів масиву:', sum) // Виведення суми
-
+// Демонстрація використання функції (припустимо, що HTML містить кнопку з ID 'myButton')
+handleButtonClick('myButton', 'Button clicked!');
 
 /*
  * #2
  *
- * Розробити функцію, яка використовує метод map масиву для створення нового масиву, в якому кожен елемент буде вдвічі більшим за елементи вхідного масиву чисел.
-*/
+ * Задача: Розробка функції відстеження позиції курсору миші
+ * Мета: Створити функцію trackMousePosition, яка встановлює обробник події для відстеження руху миші по документу та виводить в консоль координати курсору миші (X та Y).
+ *
+ * Вимоги до реалізації:
+ * 1. Функціональність: Функція має відслідковувати рух миші по документу. При кожному русі миші функція має виводити в консоль координати clientX та 
+ * clientY, які представляють позицію курсору відносно вікна переглядача.
+ * 2. Реєстрація обробника події: Функція має використовувати document.addEventListener для реєстрації обробника події mousemove.
+ * 3. Вивід даних: При спрацьовуванні події mousemove, функція має виводити рядок у форматі `"Mouse X: [X], Mouse Y: [Y]"`, де `[X]` та `[Y]` - це 
+ * відповідні координати курсору миші.
+ *
+ */
 
-function doubleArrayElements(numbers) {
-        return numbers.map(number => number * 2)
+function trackMousePosition() {
+  return document.addEventListener("mousemove", (e) => {
+    console.log(`Mouse X: ${e.clientX}, Mouse Y: ${e.clientY}`);
+  });
 }
 
-// Використання функції
-const exampleArray1 = [1, 2, 3, 4, 5]
-const doubledArray = doubleArrayElements(exampleArray1)
-console.log('Подвоєні елементи масиву:', doubledArray) // Виведення подвоєних елементів
-
+console.log(trackMousePosition())
 
 /*
  * #3
  *
- * Розробити клас `SkillsManager`, що відповідає за управління списком навичок. Клас повинен включати:
- * 1. Конструктор:
- * - Ініціалізує порожній масив `skills`, який буде використовуватися для зберігання навичок.
- * 2. Метод `addSkill(skill)`:
- * - Приймає один аргумент `skill` (рядок).
- * - Перевіряє, чи аргумент є рядком і має мінімум два символи.
- * - Якщо умови виконані, додає `skill` до масиву `skills` і повертає додану навичку.
- * - Якщо умови не виконані (навичка не є рядком або має менше двох символів), повертає `null`.
- * 3. Метод `getAllSkills()`:
- *   - Повертає поточний масив усіх навичок, збережених у класі.
+ * Задача: Реалізація делегування подій для відстеження кліків на елементах списку
+ * Мета: Створити функцію setupEventDelegation, яка дозволить встановити обробник подій на весь список, замість окремих елементів `<li>`. 
+ * Функція повинна відстежувати кліки на елементах <li> у межах заданого списку і логувати текст 
+ * "Item clicked: [Текст Елемента]", де "[Текст Елемента]" - це текст клікнутого елемента `<li>`, в консоль.
  *
- * Загальні вимоги:
- * - Клас має бути модульним і здатним до використання в інших частинах програми, тому він повинен бути експортований.
- * - Клас має забезпечувати легке управління навичками, включаючи додавання нових навичок та отримання списку всіх наявних навичок.
- * - Код має бути написаний з урахуванням принципів чистого коду, забезпечуючи читабельність та легкість підтримки.
-*/
-
-class SkillsManager {
-  constructor(){
-        this.skills = []
-  }
-  addSkill(skill){
-        if (typeof skill === 'string' && skill.length >= 2) {
-            this.skills.push(skill)
-            return skill
-        } else return null
-  }
-  getAllSkills(){
-        return this.skills
-  }
-}
-
-const skillsManager = new SkillsManager()
-
-console.log(skillsManager.addSkill('JavaScript'))
-console.log(skillsManager.addSkill('CSS'))
-console.log(skillsManager.getAllSkills())
-
-
-/*
- * #4
- * Задача: Калькулятор дат.
- * Завдання: Створити модуль на JavaScript, який імплементує функцію-конструктор DateCalculator для створення об'єктів, 
- * здатних керувати датами. Калькулятор дат має надавати такі можливості:
- * Додавання днів: Метод addDays приймає кількість днів як аргумент і додає цю кількість до поточної дати об'єкта.
- * Віднімання днів: Метод subtractDays приймає кількість днів як аргумент і віднімає цю кількість від поточної дати об'єкта.
- * Отримання результату: Метод getResult повертає поточну дату об'єкта у форматі "YYYY-MM-DD".
+ * Вимоги до реалізації:
+ * 1. Вибір елемента списку: Функція повинна приймати селектор CSS як аргумент, що вказує на елемент списку `<ul>` або `<ol>`, до якого буде 
+ * застосовано делегування подій.
+ * 2. Встановлення обробника подій: Використовуючи метод addEventListener, функція має додати обробник для події `click` на весь список. 
+ * Обробник повинен спрацьовувати при кліку на будь-який з елементів `<li>` у цьому списку.
+ * 3. Логування кліків: Коли елемент <li> клікнуто, функція має вивести у консоль повідомлення у форматі "Item clicked: [Текст Елемента]", де 
+ * "[Текст Елемента]" має бути текстом клікнутого елемента <li>. Текст елемента має бути обрізаним trim(), щоб видалити зайві пробіли на початку та в кінці.
  *
- * Критерії перевірки:
- * В модулі має бути визначена функція-конструктор DateCalculator, яка ініціалізує об'єкт з початковою датою.
- * Мають бути реалізовані та доступні методи addDays, subtractDays, та getResult для екземплярів DateCalculator.
- * Об'єкти DateCalculator мають створюватися за допомогою ключового слова new і використання функції-конструктора.
  */
 
-function DateCalculator(initialDate) {
-        this.date = new Date(initialDate)
+function createTestList() {
+  document.getElementById("testLists").innerHTML = `
+    <ul id="testList" class="bg-white rounded px-8 pt-6 pb-8 mx-auto my-4 w-50">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    `
+}
+createTestList()
 
-        this.addDays = function(days) {
-                if (typeof days !== 'number' || days < 0) throw new Error("Invalid argument")
-                this.date.setDate(this.date.getDate() + days)
-        }
-
-        this.subtractDays = function(days) {
-                if (typeof days !== 'number' || days < 0) throw new Error("Invalid argument")
-                this.date.setDate(this.date.getDate() - days)
-        }
-
-        this.getResult = function() {
-                const year = this.date.getFullYear()
-                const month = String(this.date.getMonth() + 1).padStart(2, '0')
-                const day = String(this.date.getDate()).padStart(2, '0')
-                return `${year}-${month}-${day}`
-        }
+function setupEventDelegation(selector) {
+  document.querySelector(selector).addEventListener("click", (e) => {
+    if (e.target.tagName === "LI") console.log(`Item clicked: ${e.target.textContent.trim()}`);
+    else console.log("Not a list item clicked");
+  });
 }
 
-// Демонстрація використання
-const dateCalculator = new DateCalculator('2023-01-01')
-dateCalculator.addDays(5)
-console.log(dateCalculator.getResult()) // Виводить нову дату після додавання днів
+setupEventDelegation('#testList')
 
-dateCalculator.subtractDays(3)
-console.log(dateCalculator.getResult()) // Виводить нову дату після віднімання днів
-
-// export { doubleArrayElements, sumArray, SkillsManager, DateCalculator }
+// Експорт функції для використання та тестування
+// export { handleButtonClick, trackMousePosition, setupEventDelegation }
