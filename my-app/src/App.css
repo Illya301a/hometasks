@@ -24,3 +24,7 @@ body{
 .active{
   background-color: purple;
 }
+
+.slides{
+  box-shadow: 25px 25px 40px 10px rgba(134, 134, 134, 0.5);
+}

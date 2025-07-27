@@ -1,23 +1,23 @@
-import { useEffect, useRef } from 'react';
-
-function Dots() {
-    const dotsRef = useRef(null);
-    
-    useEffect(() => {
-        const slides = document.querySelectorAll('.slides img');
-        const dotsContainer = dotsRef.current;
-        const sliderLength = slides.length;
-        for (let i = 0; i < sliderLength; i++) {
-            const dotDiv = document.createElement('div');
-            if (i === 0){
-               dotDiv.classList.add("active"); 
-            }
-            dotDiv.classList.add('dot');
-            dotsContainer.appendChild(dotDiv);
-        }
-    }, []);
-
-    return <div className="dots" ref={dotsRef}></div>
+function Dots({ currentIndex, length, setCurrentIndex }) {
+  return (
+    <div className="dots" style={{ display: 'flex', gap: 6 }}>
+      {Array.from({ length }).map((_, i) => (
+        <div
+          key={i}
+          className={i === currentIndex ? 'dot active' : 'dot'}
+          style={{
+            width: 12,
+            height: 12,
+            borderRadius: '50%',
+            background: i === currentIndex ? '#a78bfa' : '#e5e7eb',
+            transition: 'background 0.2s',
+            cursor: 'pointer',
+          }}
+          onClick={() => setCurrentIndex(i)}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default Dots;

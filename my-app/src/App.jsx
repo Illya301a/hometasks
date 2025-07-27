@@ -1,43 +1,49 @@
-import './App.css';
-import Slides from './components/Slides';
-import Dots from './components/Dots';
-import Prev from './components/Prev';
-import Next from './components/Next';
-import UpdateSlider from './components/UpdateSlider';
-import StartAutoPlay from './components/AutoInterval';
+import "./App.css";
+import Slides from "./components/Slides";
+import Dots from "./components/Dots";
+import Actions from "./components/Actions";
+import { useEffect, useState, useRef } from "react";
+import { images } from "./data";
 
 function App() {
-  
-const slides = document.querySelectorAll(".slides img");
-const slider = document.querySelector(".slides");
-const prevButton = document.querySelector(".prev");
-const nextButton = document.querySelector(".next");
-const dotsContainer = document.querySelector(".dots");
-const toggleAutoBtn = document.querySelector(".toggleAuto");
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const intervalRef = useRef(null);
 
-let currentIndex = 0;
-let autoPlayInterval;
-
-
+  useEffect(() => {
+    if (isAutoPlay) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex((prevIndex) =>
+          images.length === prevIndex + 1 ? 0 : prevIndex + 1
+        );
+      }, 1000 * 5);
+    } else if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isAutoPlay]);
 
   return (
-    <div className="App flex flex-col items-center justify-center mx-auto">
+    <div className="App flex flex-col items-center justify-center mx-auto mt-10">
       <div className="slider-container flex flex-col">
-        <Slides />
-        <Prev />
-        <Next />
+        <Slides currentIndex={currentIndex} />
       </div>
-        
-        <Dots />
-        <button className="toggleAuto bg-purple-600 rounded">Пауза</button>
-
-        <UpdateSlider />
-        <StartAutoPlay />
+        <Actions
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          slides={images}
+          isAutoPlay={isAutoPlay}
+          setIsAutoPlay={setIsAutoPlay}
+        />
+      <Dots currentIndex={currentIndex} length={images.length} setCurrentIndex={setCurrentIndex} />
     </div>
   );
-  
-
-  
 }
 
 export default App;
