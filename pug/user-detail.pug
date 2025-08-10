@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet" href="/css/style.css")
+  
+  body
+    .container
+      h1= title
+      a.back-link(href="/users") ← До користувачів
+      
+      .user-detail-card
+        h2= user.name
+        p Email: #{user.email}
+        p Вік: #{user.age}
+        p Місто: #{user.city}
+        p ID: #{user.id}
+        
+        .navigation
+          a.btn.btn-secondary(href="/users") До користувачів
+          a.btn.btn-primary(href="/") На головну 

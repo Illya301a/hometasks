@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <%= title %>
+        </h1>
+        <a href="/articles" class="back-link">← До статей</a>
+
+        <div class="article-detail-card">
+            <h2>
+                <%= article.title %>
+            </h2>
+            <p>Автор: <%= article.author %>
+            </p>
+            <p>Дата: <%= article.date %>
+            </p>
+            <p>ID: <%= article.id %>
+            </p>
+            <p>
+                <%= article.content %>
+            </p>
+
+            <div class="navigation">
+                <a href="/articles" class="btn btn-secondary">До статей</a>
+                <a href="/" class="btn btn-primary">На головну</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

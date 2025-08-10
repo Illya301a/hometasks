@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet" href="/css/style.css")
+  
+  body
+    .container
+      h1= title
+      a.back-link(href="/") ← На головну
+      
+      .users-grid
+        each user in users
+          .user-card
+            h3.user-name
+              a(href=`/users/${user.id}`)= user.name
+            p.user-email= user.email
+            .user-details
+              span Вік: #{user.age}
+              span Місто: #{user.city}
+            a.btn.btn-primary(href=`/users/${user.id}`) Деталі
+      
+      .navigation
+        a.btn.btn-secondary(href="/") На головну
+        a.btn.btn-primary(href="/articles") Статті

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <%= title %>
+        </h1>
+        <a href="/" class="back-link">← На головну</a>
+
+        <div class="articles-grid">
+            <% articles.forEach(function(article) { %>
+                <div class="article-card">
+                    <h3 class="article-title">
+                        <a href="/articles/<%= article.id %>">
+                            <%= article.title %>
+                        </a>
+                    </h3>
+                    <p>Автор: <%= article.author %>
+                    </p>
+                    <p>Дата: <%= article.date %>
+                    </p>
+                    <p>
+                        <%= article.content.substring(0, 100) %>...
+                    </p>
+                    <a href="/articles/<%= article.id %>" class="btn btn-primary">Читати</a>
+                </div>
+                <% }); %>
+        </div>
+
+        <div class="navigation">
+            <a href="/" class="btn btn-secondary">На головну</a>
+            <a href="/users" class="btn btn-primary">Користувачі</a>
+        </div>
+    </div>
+</body>
+
+</html>
