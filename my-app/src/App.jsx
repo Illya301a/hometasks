@@ -2,13 +2,27 @@ import "./App.css";
 import Slides from "./components/Slides";
 import Dots from "./components/Dots";
 import Actions from "./components/Actions";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { images } from "./data";
 
 function App() {
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef(null);
+
+  const pauseAutoPlay = useCallback(() => {
+    if (isAutoPlay) {
+      setIsAutoPlay(false);
+      setTimeout(() => {
+        setIsAutoPlay(true);
+      }, 5000);
+    }
+  }, [isAutoPlay]);
+
+  const handleIndexChange = useCallback((newIndex) => {
+    setCurrentIndex(newIndex);
+    pauseAutoPlay();
+  }, [pauseAutoPlay]);
 
   useEffect(() => {
     if (isAutoPlay) {
@@ -32,16 +46,16 @@ function App() {
   return (
     <div className="App flex flex-col items-center justify-center mx-auto mt-10">
       <div className="slider-container flex flex-col">
-        <Slides currentIndex={currentIndex} />
+        <Slides currentIndex={currentIndex} setCurrentIndex={handleIndexChange} />
       </div>
         <Actions
           currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
+          setCurrentIndex={handleIndexChange}
           slides={images}
           isAutoPlay={isAutoPlay}
           setIsAutoPlay={setIsAutoPlay}
         />
-      <Dots currentIndex={currentIndex} length={images.length} setCurrentIndex={setCurrentIndex} />
+      <Dots currentIndex={currentIndex} length={images.length} setCurrentIndex={handleIndexChange} />
     </div>
   );
 }
