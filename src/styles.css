@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  color: #000;
+  background: #fff;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.main-title {
+  text-align: center;
+  color: #000;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: block;
+}
+
+.post-section,
+.statistics-section,
+.data-section,
+.image-section {
+  background: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+}
+
+h2 {
+  color: #000;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+#post-output {
+  background: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  font-family: monospace;
+}
+
+#click-counter {
+  font-size: 1rem;
+  color: #000;
+  margin: 5px 0;
+}
+
+#destroy-stats {
+  background: #ccc;
+  color: #000;
+  border: 1px solid #999;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.data-display {
+  background: #fff;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #999;
+}
+
+.sample-image {
+  max-width: 200px;
+  height: auto;
+  border: 1px solid #999;
+}
