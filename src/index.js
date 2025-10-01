@@ -48,11 +48,6 @@ document.getElementById('xml-data').innerHTML = `
   </div>
 `;
 
-const imageSection = document.querySelector('.image-section');
-const existingImage = imageSection.querySelector('img');
-if (existingImage) {
-  existingImage.src = './favicon.png';
-}
 
 console.log('Версія Lodash:', _.VERSION);
 console.log('Приклад функції lodash - розбиття масиву:', _.chunk([1, 2, 3, 4, 5], 2));

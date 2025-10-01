@@ -1,9 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
+  target: 'web',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -14,8 +16,39 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'less-loader'
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -43,14 +76,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'favicon.png',
-          to: 'favicon.png'
-        }
-      ]
+    new ESLintPlugin({
+      extensions: ['js'],
+      exclude: ['node_modules'],
     }),
+    ...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : []),
   ],
   optimization: {
     splitChunks: {
@@ -65,6 +95,19 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.ts', '.tsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  devServer: {
+    port: 4200,
+    hot: true,
+    liveReload: true,
+    open: true,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    watchFiles: ['src/**/*'],
   },
 };
