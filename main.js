@@ -1,77 +1,83 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-console.log('#19. TypeScript homework example file');
+console.log('#20. TypeScript homework example file');
+function createPerson(name, age, isActive) {
+    return {
+        name,
+        age,
+        isActive
+    };
+}
+const newPerson = createPerson('Олександр', 31, false);
+console.log(newPerson);
 /*
- * #1
+ * #2
  *
- * Задача: Розробити функцію `sumArray`, яка приймає масив чисел і повертає їх суму.
+ * Задача: Розробити клас `Calculator` з методами `add` і `multiply`, які будуть логувати виклики цих методів за допомогою декоратора `LogMethodCalls`.
  *
- * Мета: Створення надійної функції, що здатна обробляти масиви чисел різної довжини, включаючи порожні масиви, і повертати точну суму їх елементів.
+ * Мета: Створити клас, що дозволяє виконувати базові арифметичні операції (додавання та множення) та логує деталі їх викликів для подальшого аналізу або дебагінгу.
  *
  * Вимоги до реалізації:
- * 1 Функція повинна приймати один аргумент: `numbers` - масив чисел (`number[]`).
- * 2. Функція повинна повертати суму елементів масиву як число (`number`).
- * 3. Якщо масив порожній, функція повинна повертати `0`.
- * 4. Функція має використовувати метод `reduce` для обчислення суми елементів масиву.
+ * 1. Клас `Calculator` має містити метод `add`, який приймає два числа як аргументи та повертає їх суму.
+ * 2. Клас `Calculator` має містити метод `multiply`, який приймає два числа як аргументи та повертає результат їх множення.
+ * 3. Обидва методи (`add` і `multiply`) мають бути оздоблені декоратором `LogMethodCalls`. Цей декоратор має логувати ім'я викликаного методу та передані йому аргументи.
+ * 4. Декоратор `LogMethodCalls` має бути реалізований так, щоб він міг бути застосований до будь-якого методу класу. При виклику методу, оздобленого цим декоратором, має виводитись лог у форматі: `Calling "<ім'я_методу>" with arguments: <аргументи_методу>`.
+ * 5. Всі виводи логів мають здійснюватись через `console.log`.
  *
  */
-function sumArray(numbers) {
-    return numbers.reduce((sum, num) => sum + num, 0);
+// Декоратор для логирования вызовов методов
+function LogMethodCalls(target, propertyName, propertyDescriptor) {
+    const originalMethod = propertyDescriptor.value;
+    propertyDescriptor.value = function (...args) {
+        console.log(`Calling "${propertyName}" with arguments: ${args.join(', ')}`);
+        return originalMethod.apply(this, args);
+    };
+    return propertyDescriptor;
 }
-// Вивід до консолі для демонстрації
-console.log(sumArray([1, 2, 3, 4])); // Повинно вивести 10
-console.log(sumArray([])); // Повинно вивести 0
-function createUser(name, age, isActive) {
-    return { name, age, isActive };
+class Calculator {
+    add(a, b) {
+        console.log(`Calling "add" with arguments: ${a}, ${b}`);
+        return a + b;
+    }
+    multiply(a, b) {
+        console.log(`Calling "multiply" with arguments: ${a}, ${b}`);
+        return a * b;
+    }
 }
-const newUser = createUser('Анна', 25, true);
-console.log(newUser);
+const calculator = new Calculator();
+// "Calling "add" with arguments: 2, 3"
+console.log(calculator.add(2, 3)); // 5
+// "Calling "multiply" with arguments: 3, 4"
+console.log(calculator.multiply(3, 4)); // 12
 /*
  * #3
  *
- * Задача: Розробити функцію getOrderStatus, яка приймає статус замовлення як параметр і повертає рядок з описом статусу.
+ * Задача: Реалізувати функціонал для створення профілю користувача в просторі імен UserProfile.
  *
- * Мета: Створення функції, здатної ідентифікувати статус замовлення і надавати користувачеві зрозуміле пояснення щодо поточного стану замовлення.
+ * Мета: Надати можливість створювати об'єкт профілю з унікальним ідентифікатором, ім'ям та електронною поштою.
  *
  * Вимоги до реалізації:
- * 1. У коді має бути присутній enum OrderStatus з необхідними статусами.
- * 2. enum OrderStatus повинен мати статуси: 'Pending', 'Shipped', 'Delivered', 'Cancelled'.
- * 3. Функція має використовувати enum OrderStatus для визначення можливих статусів замовлення.
- * 4. Функція має приймати один параметр типу OrderStatus і повертати рядок з описом статусу.
- * 5. Функція повинна правильно обробити кожен статус замовлення, повертаючи відповідне повідомлення:
- * -  'Pending' -> 'Замовлення очікує на обробку',
- * -  'Shipped' -> 'Замовлення було відправлено',
- * -  'Delivered' -> 'Замовлення доставлено',
- * -  'Cancelled' -> 'Замовлення скасовано'
- * -  прокинути помилку з текстом 'Невідомий статус замовлення' в будь-якому іншому випадку.
- * 6. Параметри функції та її тип повернення мають бути явно типізовані.
+ * 1. Створити namespace `UserProfile`, що слугуватиме контейнером для визначення інтерфейсу профілю та функцій.
+ * 2. Визначити всередині `UserProfile` інтерфейс `ProfileInterface`, який має містити властивості `id` (string), `name` (string) та `email` (string).
+ * 3. Реалізувати функцію `createProfile` всередині `UserProfile`, яка приймає `name` та `email`, створює та повертає об'єкт `ProfileInterface` з унікальним `id`, вказаним ім'ям та електронною поштою.
+ * 4. Функція `generateId` має бути приватною всередині `UserProfile` і слугувати для генерації унікального ідентифікатора для кожного профілю.
  *
  */
-var OrderStatus;
-(function (OrderStatus) {
-    OrderStatus["Pending"] = "Pending";
-    OrderStatus["Shipped"] = "Shipped";
-    OrderStatus["Delivered"] = "Delivered";
-    OrderStatus["Cancelled"] = "Cancelled";
-})(OrderStatus || (OrderStatus = {}));
-function getOrderStatus(status) {
-    switch (status) {
-        case OrderStatus.Pending:
-            return 'Замовлення очікує на обробку';
-        case OrderStatus.Shipped:
-            return 'Замовлення було відправлено';
-        case OrderStatus.Delivered:
-            return 'Замовлення доставлено';
-        case OrderStatus.Cancelled:
-            return 'Замовлення скасовано';
-        default:
-            throw new Error('Невідомий статус замовлення');
+var UserProfile;
+(function (UserProfile) {
+    function generateId() {
+        return Math.random().toString(36).substring(2, 13);
     }
-}
-// Приклад виклику функції
-console.log(getOrderStatus(OrderStatus.Pending));
-console.log(getOrderStatus(OrderStatus.Shipped));
-console.log(getOrderStatus(OrderStatus.Delivered));
-console.log(getOrderStatus(OrderStatus.Cancelled));
-// export { sumArray, createUser, OrderStatus, getOrderStatus }
+    function createProfile(name, email) {
+        return {
+            id: generateId(),
+            name,
+            email
+        };
+    }
+    UserProfile.createProfile = createProfile;
+})(UserProfile || (UserProfile = {}));
+const profile = UserProfile.createProfile('John Doe', 'john@example.com');
+console.log(profile); // { "id": "e6uvai5egqd", "name": "John Doe", "email": "john@example.com" }
+// export { createPerson, Calculator, UserProfile }
 //# sourceMappingURL=main.js.map
