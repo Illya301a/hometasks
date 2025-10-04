@@ -1,7 +1,28 @@
-body{
-  background-color: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000000 0%, #051505 25%, #0a1a0a 50%, #051505 75%, #000000 100%);
+  color: #f0f0f0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Плавные переходы */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Дополнительные эффекты для темно-зеленой темы */
+::selection {
+  background: rgba(0, 102, 68, 0.4);
+  color: #f8f8f8;
 }

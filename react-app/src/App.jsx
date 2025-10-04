@@ -1,18 +1,18 @@
 import './App.css'
-import AsyncData from './components/AsyncData'
+import Menu from './components/Menu'
+import AppRoutes from './pages/AppRoutes'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="app-container">
-      <h1 className="app-title">
-        Асинхронне програмування в React
-      </h1>
-      <p className="app-subtitle">
-        Використання useEffect + axios для HTTP запитів
-      </p>
-      
-      <AsyncData />
-    </div>
+    <Router>
+      <div className="app">
+        <Menu />
+        <main>
+          <AppRoutes />
+        </main>
+      </div>
+    </Router>
   )
 }
 

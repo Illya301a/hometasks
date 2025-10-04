@@ -1,124 +1,230 @@
 /* Основные стили приложения */
-.app-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #000000;
+.app {
   min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000000 0%, #0d1b0d 25%, #0a1a0a 50%, #051505 75%, #000000 100%);
   color: #ffffff;
 }
 
-.app-title {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 10px;
+/* Навигация */
+.navigation {
+  background: rgba(5, 15, 5, 0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 2px solid #1a3a1a;
+  padding: 1.5rem 0;
+  box-shadow: 0 8px 32px rgba(0, 25, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.app-subtitle {
-  text-align: center;
-  color: #cccccc;
-  margin-bottom: 30px;
-}
-
-/* Стили для компонента AsyncData */
-.async-container {
-  border: 2px solid #007bff;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 8px;
-  background-color: #1a1a1a;
-}
-
-.async-container.loading {
-  border-color: #007bff;
-  background-color: #0a0a0a;
-}
-
-.async-container.error {
-  border-color: #dc3545;
-  background-color: #2a0a0a;
-}
-
-.async-container.success {
-  border-color: #28a745;
-  background-color: #0a2a0a;
-}
-
-.async-title {
-  margin: 0 0 15px 0;
-  color: #ffffff;
-}
-
-.async-text {
+.nav-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
   margin: 0;
-  color: #cccccc;
+  padding: 0;
+  gap: 3rem;
 }
 
-.error-text {
-  color: #ff6b6b;
+.nav-list li {
+  margin: 0;
 }
 
-.error-button {
-  padding: 8px 16px;
-  background-color: #007bff;
+.nav-link {
+  color: #f0f0f0;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  border-color: #666;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link.active {
+  background: linear-gradient(45deg, #006644, #004d33, #003322);
+  border-color: #006644;
+  box-shadow: 0 8px 20px rgba(0, 102, 68, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Основной контент */
+main {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Стили для страниц */
+.page {
+  background: rgba(0, 20, 0, 0.15);
+  border-radius: 20px;
+  padding: 3rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 102, 68, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 20, 0, 0.3);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page h1 {
+  color: #f8f8f8;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: linear-gradient(45deg, #006644, #004d33, #003322, #002211);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 102, 68, 0.3);
+}
+
+.page h2 {
+  color: #f5f5f5;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(45deg, #006644, #004d33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page p {
+  color: #e8e8e8;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Кнопки и интерактивные элементы */
+.button {
+  background: linear-gradient(45deg, #006644, #004d33, #003322);
   color: white;
   border: none;
-  border-radius: 4px;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 102, 68, 0.2);
 }
 
-.error-button:hover {
-  background-color: #0056b3;
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 102, 68, 0.4);
+  background: linear-gradient(45deg, #007755, #005544, #004433);
 }
 
-.posts-container {
-  max-height: 400px;
-  overflow-y: auto;
-  margin-top: 15px;
+/* Списки */
+.content ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
 }
 
-.post-item {
-  border: 1px solid #008000;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #071d07;
+.content li {
+  background: rgba(0, 25, 0, 0.3);
+  margin: 1rem 0;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border-left: 4px solid #006644;
+  transition: all 0.3s ease;
 }
 
-.post-title {
-  margin: 0 0 10px 0;
-  color: #ffffff;
-  font-size: 16px;
+.content li:hover {
+  background: rgba(0, 40, 0, 0.4);
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(0, 102, 68, 0.2);
 }
 
-.post-body {
-  margin: 0;
-  color: #aaaaaa;
-  font-size: 14px;
-  line-height: 1.4;
+/* Адаптивность */
+@media (max-width: 768px) {
+  .nav-list {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .nav-link {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  main {
+    padding: 2rem 1rem;
+  }
+  
+  .page {
+    padding: 2rem 1.5rem;
+  }
+  
+  .page h1 {
+    font-size: 2.5rem;
+  }
+  
+  .page h2 {
+    font-size: 2rem;
+  }
 }
 
-.posts-info {
-  font-size: 12px;
-  color: #888888;
-  margin-top: 10px;
+/* Дополнительные эффекты */
+* {
+  scroll-behavior: smooth;
 }
 
-/* Скроллбар для темной темы */
-.posts-container::-webkit-scrollbar {
-  width: 8px;
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 12px;
 }
 
-.posts-container::-webkit-scrollbar-track {
-  background: #222222;
-  border-radius: 4px;
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
 }
 
-.posts-container::-webkit-scrollbar-thumb {
-  background: #444444;
-  border-radius: 4px;
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #006644, #004d33, #003322);
+  border-radius: 6px;
 }
 
-.posts-container::-webkit-scrollbar-thumb:hover {
-  background: #666666;
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #007755, #005544, #004433);
 }
