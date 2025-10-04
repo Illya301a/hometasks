@@ -1,14 +1,17 @@
 import './App.css'
-import ControlledForm from './ControlledForm'
-import UncontrolledForm from './UncontrolledForm'
-import ServerData from './ServerData'
+import AsyncData from './components/AsyncData'
 
 function App() {
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <ControlledForm />
-      <UncontrolledForm />
-      <ServerData />
+    <div className="app-container">
+      <h1 className="app-title">
+        Асинхронне програмування в React
+      </h1>
+      <p className="app-subtitle">
+        Використання useEffect + axios для HTTP запитів
+      </p>
+      
+      <AsyncData />
     </div>
   )
 }
