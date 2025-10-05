@@ -10,7 +10,7 @@ function Menu() {
                         className="nav-link"
                         end
                     >
-                        🏠 Home
+                        🏠 Головна
                     </NavLink>
                 </li>
                 <li>
@@ -18,7 +18,7 @@ function Menu() {
                         to="/about" 
                         className="nav-link"
                     >
-                        ℹ️ About
+                        ℹ️ Про нас
                     </NavLink>
                 </li>
                 <li>
@@ -26,7 +26,7 @@ function Menu() {
                         to="/contacts" 
                         className="nav-link"
                     >
-                        📞 Contacts
+                        📞 Контакти
                     </NavLink>
                 </li>
             </ul>

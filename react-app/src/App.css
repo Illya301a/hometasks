@@ -228,3 +228,331 @@ main {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(45deg, #007755, #005544, #004433);
 }
+
+/* Стили для Context компонентів */
+.context-section {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.user-profile, .theme-settings, .context-demo {
+  background: rgba(0, 25, 0, 0.2);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(0, 102, 68, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 20, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.user-profile:hover, .theme-settings:hover, .context-demo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 20, 0, 0.3);
+}
+
+.user-profile h3, .theme-settings h3, .context-demo h3 {
+  color: #f8f8f8;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: linear-gradient(45deg, #006644, #004d33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(0, 40, 0, 0.3);
+  border-radius: 10px;
+}
+
+.user-avatar {
+  font-size: 3rem;
+  background: rgba(0, 102, 68, 0.2);
+  padding: 1rem;
+  border-radius: 50%;
+  border: 2px solid #006644;
+}
+
+.user-details h4 {
+  color: #f5f5f5;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.user-details p {
+  color: #e8e8e8;
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+.team-section h4 {
+  color: #f5f5f5;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.team-member {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: rgba(0, 30, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #006644;
+  transition: all 0.3s ease;
+}
+
+.team-member:hover {
+  background: rgba(0, 50, 0, 0.4);
+  transform: translateX(5px);
+}
+
+.member-avatar {
+  font-size: 1.5rem;
+}
+
+.member-name {
+  color: #f5f5f5;
+  font-weight: 600;
+  flex: 1;
+}
+
+.member-role {
+  color: #e8e8e8;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Стили для налаштувань */
+.setting-group {
+  margin-bottom: 1.5rem;
+}
+
+.setting-group label {
+  display: block;
+  color: #f5f5f5;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.setting-select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 2px solid #006644;
+  background: rgba(0, 25, 0, 0.5);
+  color: #f5f5f5;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.setting-select:focus {
+  outline: none;
+  border-color: #007755;
+  box-shadow: 0 0 10px rgba(0, 102, 68, 0.3);
+}
+
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  padding: 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label:hover {
+  background: rgba(0, 40, 0, 0.3);
+}
+
+.setting-checkbox {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: #006644;
+}
+
+.current-settings {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 40, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 102, 68, 0.3);
+}
+
+.current-settings h4 {
+  color: #f5f5f5;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.current-settings ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.current-settings li {
+  color: #e8e8e8;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 102, 68, 0.2);
+}
+
+.current-settings li:last-child {
+  border-bottom: none;
+}
+
+/* Стили для демонстрації Context */
+.demo-controls {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.demo-button {
+  background: linear-gradient(45deg, #006644, #004d33);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 102, 68, 0.2);
+}
+
+.demo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 102, 68, 0.4);
+  background: linear-gradient(45deg, #007755, #005544);
+}
+
+.nested, .deep-nested {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(0, 30, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 102, 68, 0.2);
+}
+
+.nested h4, .deep-nested h4 {
+  color: #f5f5f5;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.deep-nested {
+  background: rgba(0, 40, 0, 0.4);
+  border-color: rgba(0, 102, 68, 0.4);
+}
+
+.context-info p {
+  color: #e8e8e8;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+/* Підтримка тем */
+.app[data-theme="dark"] {
+  background: linear-gradient(135deg, #000000 0%, #0d1b0d 25%, #0a1a0a 50%, #051505 75%, #000000 100%);
+  color: #ffffff;
+}
+
+.app[data-theme="light"] {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+  color: #212529;
+}
+
+.app[data-theme="light"] .navigation {
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom-color: #dee2e6;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.app[data-theme="light"] .nav-link {
+  color: #495057;
+}
+
+.app[data-theme="light"] .nav-link:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: #adb5bd;
+}
+
+.app[data-theme="light"] .nav-link.active {
+  background: linear-gradient(45deg, #007bff, #0056b3, #004085);
+  border-color: #007bff;
+  color: white;
+}
+
+.app[data-theme="light"] .page {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 123, 255, 0.3);
+  color: #212529;
+}
+
+.app[data-theme="light"] .page h1,
+.app[data-theme="light"] .page h2 {
+  background: linear-gradient(45deg, #007bff, #0056b3, #004085);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app[data-theme="light"] .page p {
+  color: #495057;
+}
+
+.app[data-theme="light"] .button {
+  background: linear-gradient(45deg, #007bff, #0056b3, #004085);
+}
+
+.app[data-theme="light"] .button:hover {
+  background: linear-gradient(45deg, #0056b3, #004085, #002752);
+}
+
+.app[data-theme="light"] .content li {
+  background: rgba(0, 123, 255, 0.1);
+  border-left-color: #007bff;
+  color: #495057;
+}
+
+.app[data-theme="light"] .content li:hover {
+  background: rgba(0, 123, 255, 0.15);
+}
+
+/* Адаптивність для нових компонентів */
+@media (max-width: 768px) {
+  .context-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .user-profile, .theme-settings, .context-demo {
+    padding: 1.5rem;
+  }
+  
+  .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .team-member {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
