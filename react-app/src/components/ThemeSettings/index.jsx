@@ -1,7 +1,9 @@
-import { useAppContext } from '../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateTheme, updateLanguage, toggleNotifications } from '../../store'
 
 function ThemeSettings() {
-  const { settings, updateTheme, updateLanguage, toggleNotifications } = useAppContext()
+  const settings = useSelector(state => state.app.settings)
+  const dispatch = useDispatch()
 
   return (
     <div className="theme-settings">
@@ -12,7 +14,7 @@ function ThemeSettings() {
         <select 
           id="theme-select"
           value={settings.theme} 
-          onChange={(e) => updateTheme(e.target.value)}
+          onChange={(e) => dispatch(updateTheme(e.target.value))}
           className="setting-select"
         >
           <option value="light">☀️ Світла</option>
@@ -26,7 +28,7 @@ function ThemeSettings() {
         <select 
           id="language-select"
           value={settings.language} 
-          onChange={(e) => updateLanguage(e.target.value)}
+          onChange={(e) => dispatch(updateLanguage(e.target.value))}
           className="setting-select"
         >
           <option value="uk">🇺🇦 Українська</option>
@@ -40,7 +42,7 @@ function ThemeSettings() {
           <input 
             type="checkbox" 
             checked={settings.notifications}
-            onChange={toggleNotifications}
+            onChange={() => dispatch(toggleNotifications())}
             className="setting-checkbox"
           />
           🔔 Сповіщення

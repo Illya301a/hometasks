@@ -2,10 +2,11 @@ import './App.css'
 import Menu from './components/Menu'
 import AppRoutes from './pages/AppRoutes'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { useAppContext } from './context/AppContext'
+import { Provider, useSelector } from 'react-redux'
+import { store } from './store'
 
-function App() {
-  const { settings } = useAppContext()
+function AppContent() {
+  const settings = useSelector(state => state.app.settings)
   
   return (
     <Router>
@@ -16,6 +17,14 @@ function App() {
         </main>
       </div>
     </Router>
+  )
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   )
 }
 

@@ -1,7 +1,8 @@
-import { useAppContext } from '../../context/AppContext'
+import { useSelector } from 'react-redux'
 
 function UserProfile() {
-  const { currentUser, users } = useAppContext()
+  const currentUser = useSelector(state => state.app.currentUser)
+  const users = useSelector(state => state.app.users)
 
   return (
     <div className="user-profile">
