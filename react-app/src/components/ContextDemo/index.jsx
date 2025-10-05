@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateTheme } from '../../store'
 
 function DeepNestedComponent() {
-  const settings = useSelector(state => state.app.settings)
-  const currentUser = useSelector(state => state.app.currentUser)
+  const settings = useSelector(state => state.settings)
+  const currentUser = useSelector(state => state.users.currentUser)
   
   return (
     <div className="deep-nested">
@@ -19,7 +19,7 @@ function DeepNestedComponent() {
 }
 
 function NestedComponent() {
-  const users = useSelector(state => state.app.users)
+  const users = useSelector(state => state.users.users)
   
   return (
     <div className="nested">
@@ -33,7 +33,7 @@ function NestedComponent() {
 }
 
 function ContextDemo() {
-  const settings = useSelector(state => state.app.settings)
+  const settings = useSelector(state => state.settings)
   const dispatch = useDispatch()
   
   return (

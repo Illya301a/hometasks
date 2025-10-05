@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 
 function UserProfile() {
-  const currentUser = useSelector(state => state.app.currentUser)
-  const users = useSelector(state => state.app.users)
+  const currentUser = useSelector(state => state.users.currentUser)
+  const users = useSelector(state => state.users.users)
 
   return (
     <div className="user-profile">

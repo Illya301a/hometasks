@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateTheme, updateLanguage, toggleNotifications } from '../../store'
 
 function ThemeSettings() {
-  const settings = useSelector(state => state.app.settings)
+  const settings = useSelector(state => state.settings)
   const dispatch = useDispatch()
 
   return (
