@@ -1,16 +1,33 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
 
 const app = express();
 const PORT = 3000;
-const JWT_SECRET = 'your-secret-key-change-in-production';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(session({
+  secret: 'your-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 app.use('/css', express.static('css'));
 app.use('/public', express.static('public'));
@@ -26,20 +43,41 @@ const authUsers = [
   { id: 1, username: 'admin', email: 'admin@example.com', password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' }
 ];
 
-const authenticateToken = (req, res, next) => {
-  const token = req.cookies.token;
-  
-  if (!token) {
-    return res.status(401).json({ error: 'Токен доступа не найден' });
-  }
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: 'Недействительный токен' });
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+}, async (email, password, done) => {
+  try {
+    const user = authUsers.find(u => u.email === email);
+    if (!user) {
+      return done(null, false, { message: 'Невірний email або пароль' });
     }
-    req.user = user;
-    next();
-  });
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return done(null, false, { message: 'Невірний email або пароль' });
+    }
+
+    return done(null, user);
+  } catch (error) {
+    return done(error);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  const user = authUsers.find(u => u.id === id);
+  done(null, user);
+});
+
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
 };
 
 const articles = [
@@ -56,7 +94,7 @@ const articles = [
 
 app.get('/', (req, res) => {
   const theme = req.cookies.theme || 'light';
-  const isAuthenticated = !!req.cookies.token;
+  const isAuthenticated = req.isAuthenticated();
   
   res.send(`
     <!DOCTYPE html>
@@ -73,7 +111,7 @@ app.get('/', (req, res) => {
                 <a href="/users" class="btn btn-primary">Користувачі (PUG)</a>
                 <a href="/articles" class="btn btn-secondary">Статті (EJS)</a>
                 ${isAuthenticated ? 
-                  '<a href="/profile" class="btn btn-success">Профіль</a>' : 
+                  '<a href="/profile" class="btn btn-success">Профіль</a><a href="/protected" class="btn btn-warning">Захищена сторінка</a>' : 
                   '<a href="/login" class="btn btn-success">Вхід</a>'
                 }
             </div>
@@ -109,6 +147,7 @@ app.post('/api/theme', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+  const errorMessage = req.flash('error')[0];
   res.send(`
     <!DOCTYPE html>
     <html>
@@ -120,10 +159,11 @@ app.get('/login', (req, res) => {
     <body class="${req.cookies.theme || 'light'}">
         <div class="container">
             <h1>Вхід</h1>
+            ${errorMessage ? `<div class="alert alert-danger">${errorMessage}</div>` : ''}
             <form action="/login" method="POST">
                 <div class="form-group">
-                    <label for="username">Ім'я користувача:</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль:</label>
@@ -139,34 +179,14 @@ app.get('/login', (req, res) => {
   `);
 });
 
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  
-  const user = authUsers.find(u => u.username === username);
-  if (!user) {
-    return res.status(401).send('Невірне ім\'я користувача або пароль');
-  }
-
-  const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) {
-    return res.status(401).send('Невірне ім\'я користувача або пароль');
-  }
-
-  const token = jwt.sign(
-    { id: user.id, username: user.username },
-    JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
-  });
-
-  res.redirect('/profile');
-});
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/profile',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
 
 app.get('/register', (req, res) => {
+  const errorMessage = req.flash('error')[0];
   res.send(`
     <!DOCTYPE html>
     <html>
@@ -178,6 +198,7 @@ app.get('/register', (req, res) => {
     <body class="${req.cookies.theme || 'light'}">
         <div class="container">
             <h1>Реєстрація</h1>
+            ${errorMessage ? `<div class="alert alert-danger">${errorMessage}</div>` : ''}
             <form action="/register" method="POST">
                 <div class="form-group">
                     <label for="username">Ім'я користувача:</label>
@@ -206,7 +227,8 @@ app.post('/register', async (req, res) => {
   
   const existingUser = authUsers.find(u => u.username === username || u.email === email);
   if (existingUser) {
-    return res.status(400).send('Користувач з таким ім\'ям або email вже існує');
+    req.flash('error', 'Користувач з таким ім\'ям або email вже існує');
+    return res.redirect('/register');
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -220,21 +242,16 @@ app.post('/register', async (req, res) => {
   
   authUsers.push(newUser);
 
-  const token = jwt.sign(
-    { id: newUser.id, username: newUser.username },
-    JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
+  req.login(newUser, (err) => {
+    if (err) {
+      req.flash('error', 'Помилка при вході після реєстрації');
+      return res.redirect('/login');
+    }
+    res.redirect('/profile');
   });
-
-  res.redirect('/profile');
 });
 
-app.get('/profile', authenticateToken, (req, res) => {
+app.get('/profile', isAuthenticated, (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
@@ -247,6 +264,7 @@ app.get('/profile', authenticateToken, (req, res) => {
         <div class="container">
             <h1>Профіль користувача</h1>
             <p>Ласкаво просимо, ${req.user.username}!</p>
+            <p>Email: ${req.user.email}</p>
             <p>ID користувача: ${req.user.id}</p>
             <div class="navigation">
                 <a href="/" class="btn btn-primary">На головну</a>
@@ -259,8 +277,38 @@ app.get('/profile', authenticateToken, (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.redirect('/');
+  req.logout((err) => {
+    if (err) {
+      return res.redirect('/');
+    }
+    res.redirect('/');
+  });
+});
+
+app.get('/protected', isAuthenticated, (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Захищена сторінка</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="icon" href="/favicon.ico">
+    </head>
+    <body class="${req.cookies.theme || 'light'}">
+        <div class="container">
+            <h1>Захищена сторінка</h1>
+            <p>Це захищена сторінка, доступна тільки авторизованим користувачам.</p>
+            <p>Ласкаво просимо, ${req.user.username}!</p>
+            <p>Ваш email: ${req.user.email}</p>
+            <div class="navigation">
+                <a href="/" class="btn btn-primary">На головну</a>
+                <a href="/profile" class="btn btn-success">Профіль</a>
+                <a href="/logout" class="btn btn-danger">Вийти</a>
+            </div>
+        </div>
+    </body>
+    </html>
+  `);
 });
 
 app.get('/users', (req, res) => {
@@ -270,7 +318,7 @@ app.get('/users', (req, res) => {
     title: 'Користувачі', 
     users: users, 
     theme: req.cookies.theme || 'light',
-    isAuthenticated: !!req.cookies.token 
+    isAuthenticated: req.isAuthenticated() 
   });
 });
 
@@ -285,7 +333,7 @@ app.get('/users/:userId', (req, res) => {
     title: user.name, 
     user: user,
     theme: req.cookies.theme || 'light',
-    isAuthenticated: !!req.cookies.token 
+    isAuthenticated: req.isAuthenticated() 
   });
 });
 
@@ -297,7 +345,7 @@ app.get('/articles', (req, res) => {
     title: 'Статті', 
     articles: articles,
     theme: req.cookies.theme || 'light',
-    isAuthenticated: !!req.cookies.token 
+    isAuthenticated: req.isAuthenticated() 
   });
 });
 
@@ -312,7 +360,7 @@ app.get('/articles/:articleId', (req, res) => {
     title: article.title, 
     article: article,
     theme: req.cookies.theme || 'light',
-    isAuthenticated: !!req.cookies.token 
+    isAuthenticated: req.isAuthenticated() 
   });
 });
 
