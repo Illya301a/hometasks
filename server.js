@@ -26,8 +26,68 @@ async function connect() {
     console.log("Успешно подключено к MongoDB Atlas")
   
     const db = client.db(dbName)
+    const collection = db.collection("Users")
+
+  //   const newPerson = {name: "Paris", age: "45", email: "paris@gmail.com"}
+  //   const newPeople = [
+  //     {
+  //     name: "Budapest", 
+  //     age: "45", 
+  //     email: "budapest@gmail.com", 
+  //   },
+  //   {
+  //     name: "Rome", 
+  //     age: "45", 
+  //     email: "rome@gmail.com", 
+  //   },
+  //   {
+  //     name: "London", 
+  //     age: "45", 
+  //     email: "london@gmail.com", 
+  //   },
+  //   {
+  //     name: "Madrid", 
+  //     age: "45", 
+  //     email: "madrid@gmail.com", 
+  //   },
+  //   {
+  //     name: "Berlin", 
+  //     age: "45", 
+  //     email: "berlin@gmail.com", 
+  //   },
+  //   {
+  //     name: "Prague", 
+  //     age: "45", 
+  //     email: "prague@gmail.com", 
+  //   }
+  // ]
+  //   await collection.insertOne(newPerson)
+  //   await collection.insertMany(newPeople)
+
+  // const query = {email: "budapest@gmail.com"}
+  //   const replacement = {
+  //     name: "Kyiv", 
+  //     age: 45, 
+  //     email: "kyiv@gmail.com",
+  //     city: "Kyiv"
+  //   }
+    
+  //   const result = await collection.replaceOne(query, replacement)
+
+  // const query = {email: "rome@gmail.com"}
+
+  // const result = await collection.deleteOne(query)
+
+  // const query = {name: "Madrid"}
+  // const people = await collection.find(query).toArray()
+  // console.log("people", people)
+
+  const query = {name: "Madrid"}
+  const projection = {_id: 0, name: 1, age: 1}
+  const people = await collection.find(query).project(projection).toArray()
+  console.log("people", people)
+
     console.log("База данных успешно подключена")
-    await db.createCollection("emample_collection")
   } catch (err) {
     console.error("Ошибка подключения к MongoDB Atlas", err)
   }
