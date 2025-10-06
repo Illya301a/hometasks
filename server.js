@@ -1,4 +1,5 @@
 const express = require('express');
+const { MongoClient } = require('mongodb');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -9,6 +10,30 @@ const flash = require('connect-flash');
 
 const app = express();
 const PORT = 3000;
+
+const uri = 
+  "mongodb+srv://admin:2556507Hjkllzxc@cluster0.nql6ag5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const dbName = "Marketplace";
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+async function connect() {
+  try {
+    await client.connect()
+    console.log("Успешно подключено к MongoDB Atlas")
+  
+    const db = client.db(dbName)
+    console.log("База данных успешно подключена")
+    await db.createCollection("emample_collection")
+  } catch (err) {
+    console.error("Ошибка подключения к MongoDB Atlas", err)
+  }
+}
+
+connect()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -367,3 +392,27 @@ app.get('/articles/:articleId', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Сервер запущено: http://localhost:${PORT}`);
 }); 
+
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// const uri = "mongodb+srv://admin:2556507Hjkllzxc@cluster0.nql6ag5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient(uri, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
+// async function run() {
+//   try {
+//     // Connect the client to the server	(optional starting in v4.7)
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
