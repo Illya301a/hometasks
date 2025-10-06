@@ -3,8 +3,9 @@ html
   head
     title= title
     link(rel="stylesheet" href="/css/style.css")
+    link(rel="icon" href="/favicon.ico")
   
-  body
+  body(class=theme)
     .container
       h1= title
       a.back-link(href="/") ← На головну
@@ -23,3 +24,7 @@ html
       .navigation
         a.btn.btn-secondary(href="/") На головну
         a.btn.btn-primary(href="/articles") Статті
+        if isAuthenticated
+          a.btn.btn-success(href="/profile") Профіль
+        else
+          a.btn.btn-success(href="/login") Вхід

@@ -6,9 +6,10 @@
         <%= title %>
     </title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 
-<body>
+<body class="<%= theme %>">
     <div class="container">
         <h1>
             <%= title %>
@@ -38,6 +39,11 @@
         <div class="navigation">
             <a href="/" class="btn btn-secondary">На головну</a>
             <a href="/users" class="btn btn-primary">Користувачі</a>
+            <% if (isAuthenticated) { %>
+                <a href="/profile" class="btn btn-success">Профіль</a>
+                <% } else { %>
+                    <a href="/login" class="btn btn-success">Вхід</a>
+                    <% } %>
         </div>
     </div>
 </body>
