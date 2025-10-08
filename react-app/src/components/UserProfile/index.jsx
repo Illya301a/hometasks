@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectCurrentUser, selectAllUsers, updateCurrentUser, addUser, removeUser } from '../../store'
 
 function UserProfile() {
-  const currentUser = useSelector(state => state.users.currentUser)
-  const users = useSelector(state => state.users.users)
+  const currentUser = useSelector(selectCurrentUser)
+  const users = useSelector(selectAllUsers)
+  const dispatch = useDispatch()
 
   return (
     <div className="user-profile">
@@ -16,6 +18,15 @@ function UserProfile() {
         </div>
       </div>
       
+      <div className="profile-actions">
+        <button 
+          onClick={() => dispatch(updateCurrentUser({ name: 'Ілля (Оновлено)' }))}
+          className="action-button"
+        >
+          ✏️ Оновити ім'я
+        </button>
+      </div>
+
       <div className="team-section">
         <h4>👥 Команда ({users.length} осіб)</h4>
         <div className="team-list">
@@ -24,9 +35,30 @@ function UserProfile() {
               <span className="member-avatar">{user.avatar}</span>
               <span className="member-name">{user.name}</span>
               <span className="member-role">{user.role}</span>
+              {user.id !== currentUser.id && (
+                <button 
+                  onClick={() => dispatch(removeUser(user.id))}
+                  className="remove-button"
+                  title="Видалити користувача"
+                >
+                  ❌
+                </button>
+              )}
             </div>
           ))}
         </div>
+        
+        <button 
+          onClick={() => dispatch(addUser({
+            name: 'Новий Користувач',
+            email: 'new@example.com',
+            role: 'Учасник',
+            avatar: '👤'
+          }))}
+          className="add-user-button"
+        >
+          ➕ Додати користувача
+        </button>
       </div>
     </div>
   )

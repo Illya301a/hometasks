@@ -534,6 +534,149 @@ main {
   background: rgba(0, 123, 255, 0.15);
 }
 
+/* Новые стили для оптимизированного Redux */
+.app-container {
+  min-height: 100vh;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  background: rgba(0, 25, 0, 0.9);
+  border-bottom: 2px solid #006644;
+}
+
+.navigation a {
+  color: #f5f5f5;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: 2px solid transparent;
+}
+
+.navigation a:hover {
+  background: rgba(0, 102, 68, 0.3);
+  border-color: #006644;
+  transform: translateY(-2px);
+}
+
+.counter-section, .theme-section, .users-section {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(0, 25, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 102, 68, 0.3);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.button-group button {
+  background: linear-gradient(45deg, #006644, #004d33);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.button-group button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 102, 68, 0.4);
+  background: linear-gradient(45deg, #007755, #005544);
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background: rgba(0, 40, 0, 0.3);
+  border-radius: 10px;
+  border-left: 3px solid #006644;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover {
+  background: rgba(0, 60, 0, 0.4);
+  transform: translateX(5px);
+}
+
+.avatar {
+  font-size: 2rem;
+  background: rgba(0, 102, 68, 0.2);
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid #006644;
+}
+
+.profile-actions {
+  margin: 1rem 0;
+}
+
+.action-button {
+  background: linear-gradient(45deg, #006644, #004d33);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 102, 68, 0.4);
+  background: linear-gradient(45deg, #007755, #005544);
+}
+
+.remove-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+.add-user-button {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.add-user-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+  background: linear-gradient(45deg, #218838, #1e7e34);
+}
+
 /* Адаптивність для нових компонентів */
 @media (max-width: 768px) {
   .context-section {
@@ -554,5 +697,24 @@ main {
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
+  }
+  
+  .navigation {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .button-group button {
+    width: 100%;
+  }
+  
+  .user-card {
+    flex-direction: column;
+    text-align: center;
   }
 }
