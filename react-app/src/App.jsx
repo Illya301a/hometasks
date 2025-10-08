@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { 
@@ -8,7 +8,11 @@ import {
   selectCount, 
   selectSettings,
   selectAllUsers,
-  updateTheme 
+  selectUsersLoading,
+  selectUsersError,
+  updateTheme,
+  fetchUsers,
+  clearUsersError
 } from './store'
 import ThemeSettings from './components/ThemeSettings'
 import UserProfile from './components/UserProfile'
@@ -18,7 +22,14 @@ function Home() {
   const count = useSelector(selectCount)
   const settings = useSelector(selectSettings)
   const users = useSelector(selectAllUsers)
+  const usersLoading = useSelector(selectUsersLoading)
+  const usersError = useSelector(selectUsersError)
   const dispatch = useDispatch()
+
+  // Загружаем пользователей при монтировании компонента
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [dispatch])
 
   return (
     <div className="app" data-theme={settings.theme}>
@@ -48,7 +59,39 @@ function Home() {
       
       <div className="users-section">
         <h3>👥 Users ({users.length}):</h3>
-        {users.map(user => (
+        
+        {usersLoading && (
+          <div className="loading-indicator">
+            <div className="spinner"></div>
+            <span>Завантаження користувачів...</span>
+          </div>
+        )}
+        
+        {usersError && (
+          <div className="error-message">
+            <span>❌ Помилка: {usersError}</span>
+            <button 
+              onClick={() => dispatch(clearUsersError())}
+              className="error-close"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        
+        {!usersLoading && !usersError && users.length === 0 && (
+          <div className="empty-state">
+            <span>📭 Користувачі не знайдені</span>
+            <button 
+              onClick={() => dispatch(fetchUsers())}
+              className="retry-button"
+            >
+              🔄 Спробувати знову
+            </button>
+          </div>
+        )}
+        
+        {!usersLoading && !usersError && users.map(user => (
           <div key={user.id} className="user-card">
             <span className="avatar">{user.avatar}</span>
             <div>

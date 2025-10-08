@@ -1,9 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { updateTheme, updateLanguage, toggleNotifications } from '../../store'
+import { 
+  updateTheme, 
+  updateLanguage, 
+  toggleNotifications,
+  selectSettingsLoading,
+  selectSettingsError,
+  selectSettingsLastSync,
+  saveSettings,
+  syncSettings,
+  clearSettingsError
+} from '../../store'
 
 function ThemeSettings() {
   const settings = useSelector(state => state.settings)
+  const settingsLoading = useSelector(selectSettingsLoading)
+  const settingsError = useSelector(selectSettingsError)
+  const settingsLastSync = useSelector(selectSettingsLastSync)
   const dispatch = useDispatch()
+
+  const handleSaveSettings = () => {
+    dispatch(saveSettings(settings))
+  }
+
+  const handleSyncSettings = () => {
+    dispatch(syncSettings())
+  }
 
   return (
     <div className="theme-settings">
@@ -49,12 +70,52 @@ function ThemeSettings() {
         </label>
       </div>
 
+      {settingsLoading && (
+        <div className="loading-indicator">
+          <div className="spinner"></div>
+          <span>Збереження налаштувань...</span>
+        </div>
+      )}
+      
+      {settingsError && (
+        <div className="error-message">
+          <span>❌ Помилка: {settingsError}</span>
+          <button 
+            onClick={() => dispatch(clearSettingsError())}
+            className="error-close"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      <div className="settings-actions">
+        <button 
+          onClick={handleSaveSettings}
+          disabled={settingsLoading}
+          className="save-button"
+        >
+          {settingsLoading ? '⏳ Збереження...' : '💾 Зберегти налаштування'}
+        </button>
+        
+        <button 
+          onClick={handleSyncSettings}
+          disabled={settingsLoading}
+          className="sync-button"
+        >
+          🔄 Синхронізувати з сервером
+        </button>
+      </div>
+
       <div className="current-settings">
         <h4>Поточні налаштування:</h4>
         <ul>
           <li>Тема: {settings.theme === 'light' ? '☀️ Світла' : settings.theme === 'dark' ? '🌙 Темна' : '🔄 Автоматична'}</li>
           <li>Мова: {settings.language === 'uk' ? '🇺🇦 Українська' : settings.language === 'en' ? '🇺🇸 English' : '🇷🇺 Русский'}</li>
           <li>Сповіщення: {settings.notifications ? '🔔 Увімкнено' : '🔕 Вимкнено'}</li>
+          {settingsLastSync && (
+            <li>Остання синхронізація: {new Date(settingsLastSync).toLocaleString()}</li>
+          )}
         </ul>
       </div>
     </div>

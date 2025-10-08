@@ -1,10 +1,37 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCurrentUser, selectAllUsers, updateCurrentUser, addUser, removeUser } from '../../store'
+import { 
+  selectCurrentUser, 
+  selectAllUsers, 
+  selectUsersLoading,
+  selectUsersError,
+  updateCurrentUser, 
+  createUser, 
+  deleteUserAsync,
+  clearUsersError
+} from '../../store'
 
 function UserProfile() {
   const currentUser = useSelector(selectCurrentUser)
   const users = useSelector(selectAllUsers)
+  const usersLoading = useSelector(selectUsersLoading)
+  const usersError = useSelector(selectUsersError)
   const dispatch = useDispatch()
+
+  const handleDeleteUser = async (id) => {
+    if (window.confirm('Ви впевнені, що хочете видалити цього користувача?')) {
+      dispatch(deleteUserAsync(id))
+    }
+  }
+
+  const handleAddUser = () => {
+    const newUser = {
+      name: 'Новий Користувач',
+      email: `user${Date.now()}@example.com`,
+      role: 'Учасник',
+      avatar: '👤'
+    }
+    dispatch(createUser(newUser))
+  }
 
   return (
     <div className="user-profile">
@@ -29,6 +56,26 @@ function UserProfile() {
 
       <div className="team-section">
         <h4>👥 Команда ({users.length} осіб)</h4>
+        
+        {usersLoading && (
+          <div className="loading-indicator">
+            <div className="spinner"></div>
+            <span>Обробка запиту...</span>
+          </div>
+        )}
+        
+        {usersError && (
+          <div className="error-message">
+            <span>❌ Помилка: {usersError}</span>
+            <button 
+              onClick={() => dispatch(clearUsersError())}
+              className="error-close"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        
         <div className="team-list">
           {users.map(user => (
             <div key={user.id} className="team-member">
@@ -37,9 +84,10 @@ function UserProfile() {
               <span className="member-role">{user.role}</span>
               {user.id !== currentUser.id && (
                 <button 
-                  onClick={() => dispatch(removeUser(user.id))}
+                  onClick={() => handleDeleteUser(user.id)}
                   className="remove-button"
                   title="Видалити користувача"
+                  disabled={usersLoading}
                 >
                   ❌
                 </button>
@@ -49,15 +97,11 @@ function UserProfile() {
         </div>
         
         <button 
-          onClick={() => dispatch(addUser({
-            name: 'Новий Користувач',
-            email: 'new@example.com',
-            role: 'Учасник',
-            avatar: '👤'
-          }))}
+          onClick={handleAddUser}
           className="add-user-button"
+          disabled={usersLoading}
         >
-          ➕ Додати користувача
+          {usersLoading ? '⏳ Додавання...' : '➕ Додати користувача'}
         </button>
       </div>
     </div>
