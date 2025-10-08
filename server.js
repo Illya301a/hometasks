@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
+const mongoose = require('mongoose')
 
 const app = express();
 const PORT = 3000;
@@ -20,6 +21,10 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
+mongoose.connect(uri)
+.then(() => console.log("Mongoose успешно подключен"))
+.catch(err => console.error("Ошибка подключения Mongoose", err))
+
 async function connect() {
   try {
     await client.connect()
@@ -28,7 +33,37 @@ async function connect() {
     const db = client.db(dbName)
     const collection = db.collection("Users")
 
+    const userSchema = new mongoose.Schema({
+      name: { 
+        type: String, 
+        required: true 
+      },
+      email: { 
+        type: String, 
+        required: true 
+      },
+      age: { 
+        type: Number 
+      },
+      city: { 
+        type: String 
+      },
+      hobbies: [{ 
+        type: String 
+      }]
+    });
     
+  //   const User = mongoose.model('User', userSchema);
+    
+  //   const newUser = new User({
+  //     name: 'John Doe',
+  //     age: 30,
+  //     email: 'john@example.com'
+  //   });
+
+  // newUser.save()
+  // .then(doc => console.log('Новий користувач доданий:', doc))
+  // .catch(err => console.error('Помилка при додаванні користувача:', err));
 
     console.log("База данных успешно подключена")
   } catch (err) {
@@ -37,32 +72,6 @@ async function connect() {
 }
 
 connect()
-
-// async function main() {
-//   await client.connect();
-//   const db = client.db("studentDB");
-//   const collection = db.collection("assignments");
-
-//   await collection.insertMany([
-//       { name: "Олексій", subject: "Математика", score: 92 },
-//       { name: "Марія", subject: "Фізика", score: 78 },
-//       { name: "Анна", subject: "Хімія", score: 85 },
-//       { name: "Дмитро", subject: "Історія", score: 88 },
-//       { name: "Олена", subject: "Література", score: 76 }
-//   ]);
-
-//   const highScores = await collection.find({ score: { $gt: 80 } }).toArray();
-//   console.log("Документы с score > 80:", highScores);
-
-//   await collection.updateOne({ score: { $lt: 85 } }, { $inc: { score: 5 } });
-
-//   const minDoc = await collection.findOne({}, { sort: { score: 1 } });
-//   await collection.deleteOne({ _id: minDoc._id });
-
-//   await client.close();
-// }
-
-// main();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
