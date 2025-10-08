@@ -8,6 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
 const mongoose = require('mongoose')
+const User = require('./models/User')
 
 const app = express();
 const PORT = 3000;
@@ -16,62 +17,12 @@ const uri =
   "mongodb+srv://admin:2556507Hjkllzxc@cluster0.nql6ag5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const dbName = "Marketplace";
 
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
+// Подключаемся к MongoDB через Mongoose
 mongoose.connect(uri)
 .then(() => console.log("Mongoose успешно подключен"))
 .catch(err => console.error("Ошибка подключения Mongoose", err))
 
-async function connect() {
-  try {
-    await client.connect()
-    console.log("Успешно подключено к MongoDB Atlas")
-  
-    const db = client.db(dbName)
-    const collection = db.collection("Users")
-
-    const userSchema = new mongoose.Schema({
-      name: { 
-        type: String, 
-        required: true 
-      },
-      email: { 
-        type: String, 
-        required: true 
-      },
-      age: { 
-        type: Number 
-      },
-      city: { 
-        type: String 
-      },
-      hobbies: [{ 
-        type: String 
-      }]
-    });
-    
-  //   const User = mongoose.model('User', userSchema);
-    
-  //   const newUser = new User({
-  //     name: 'John Doe',
-  //     age: 30,
-  //     email: 'john@example.com'
-  //   });
-
-  // newUser.save()
-  // .then(doc => console.log('Новий користувач доданий:', doc))
-  // .catch(err => console.error('Помилка при додаванні користувача:', err));
-
-    console.log("База данных успешно подключена")
-  } catch (err) {
-    console.error("Ошибка подключения к MongoDB Atlas", err)
-  }
-}
-
-connect()
+// Подключение уже настроено через Mongoose выше
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -95,6 +46,7 @@ app.use(flash());
 app.use('/css', express.static('css'));
 app.use('/public', express.static('public'));
 app.use('/favicon.ico', express.static('public/favicon.ico'));
+
 
 const users = [
   { id: 1, name: 'Ілля Андрелука', email: 'illia@gmail.com', age: 18, city: 'Одеса' },
@@ -375,30 +327,43 @@ app.get('/protected', isAuthenticated, (req, res) => {
   `);
 });
 
-app.get('/users', (req, res) => {
-  app.set('view engine', 'pug');
-  app.set('views', 'pug');
-  res.render('users', { 
-    title: 'Користувачі', 
-    users: users, 
-    theme: req.cookies.theme || 'light',
-    isAuthenticated: req.isAuthenticated() 
-  });
+app.get('/users', async (req, res) => {
+  try {
+    app.set('view engine', 'pug');
+    app.set('views', 'pug');
+    
+    // Получаем пользователей из базы данных через Mongoose
+    const dbUsers = await User.find({});
+    
+    res.render('users', { 
+      title: 'Користувачі', 
+      users: dbUsers, 
+      theme: req.cookies.theme || 'light',
+      isAuthenticated: req.isAuthenticated() 
+    });
+  } catch (error) {
+    res.status(500).send('Ошибка загрузки пользователей: ' + error.message);
+  }
 });
 
-app.get('/users/:userId', (req, res) => {
-  const userId = parseInt(req.params.userId);
-  const user = users.find(u => u.id === userId);
-  
-  if (!user) {
-    return res.status(404).send('Користувача не знайдено');
+app.get('/users/:userId', async (req, res) => {
+  try {
+    // Используем Mongoose для поиска пользователя по ID
+    const user = await User.findById(req.params.userId);
+    
+    if (!user) {
+      return res.status(404).send('Користувача не знайдено');
+    }
+    
+    res.render('user-detail', { 
+      title: user.name, 
+      user: user,
+      theme: req.cookies.theme || 'light',
+      isAuthenticated: req.isAuthenticated() 
+    });
+  } catch (error) {
+    res.status(500).send('Ошибка загрузки пользователя: ' + error.message);
   }
-  res.render('user-detail', { 
-    title: user.name, 
-    user: user,
-    theme: req.cookies.theme || 'light',
-    isAuthenticated: req.isAuthenticated() 
-  });
 });
 
 
@@ -430,16 +395,13 @@ app.get('/articles/:articleId', (req, res) => {
 
 app.get('/api/users/cursor', async (req, res) => {
   try {
-    const db = client.db(dbName);
-    const usersCollection = db.collection("Users");
-    
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit;
     
-    const cursor = usersCollection.find({}).skip(skip).limit(limit);
-    const users = await cursor.toArray();
-    const total = await usersCollection.countDocuments();
+    // Используем Mongoose для получения пользователей с пагинацией
+    const users = await User.find({}).skip(skip).limit(limit);
+    const total = await User.countDocuments();
     
     res.json({ users, page, total, pages: Math.ceil(total / limit) });
   } catch (error) {
@@ -449,14 +411,19 @@ app.get('/api/users/cursor', async (req, res) => {
 
 app.get('/api/analytics/age-stats', async (req, res) => {
   try {
-    const db = client.db(dbName);
-    const usersCollection = db.collection("Users");
+    // Используем Mongoose для агрегации
+    const result = await User.aggregate([
+      { 
+        $group: { 
+          _id: null, 
+          avgAge: { $avg: { $toDouble: "$age" } }, 
+          count: { $sum: 1 }, 
+          minAge: { $min: { $toDouble: "$age" } }, 
+          maxAge: { $max: { $toDouble: "$age" } } 
+        } 
+      }
+    ]);
     
-    const pipeline = [
-      { $group: { _id: null, avgAge: { $avg: { $toDouble: "$age" } }, count: { $sum: 1 }, minAge: { $min: { $toDouble: "$age" } }, maxAge: { $max: { $toDouble: "$age" } } } }
-    ];
-    
-    const result = await usersCollection.aggregate(pipeline).toArray();
     res.json(result[0] || {});
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -465,22 +432,22 @@ app.get('/api/analytics/age-stats', async (req, res) => {
 
 app.get('/api/users/search', async (req, res) => {
   try {
-    const db = client.db(dbName);
-    const usersCollection = db.collection("Users");
-    
     const { name, email } = req.query;
     const filter = {};
+    
+    // Создаем фильтр для поиска
     if (name) filter.name = { $regex: name, $options: 'i' };
     if (email) filter.email = { $regex: email, $options: 'i' };
     
-    const cursor = usersCollection.find(filter).limit(10);
-    const users = await cursor.toArray();
+    // Используем Mongoose для поиска
+    const users = await User.find(filter).limit(10);
     
     res.json({ users, count: users.length });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 app.get('/analytics', (req, res) => {
   res.send(`
