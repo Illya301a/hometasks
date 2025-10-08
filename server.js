@@ -38,6 +38,32 @@ async function connect() {
 
 connect()
 
+// async function main() {
+//   await client.connect();
+//   const db = client.db("studentDB");
+//   const collection = db.collection("assignments");
+
+//   await collection.insertMany([
+//       { name: "Олексій", subject: "Математика", score: 92 },
+//       { name: "Марія", subject: "Фізика", score: 78 },
+//       { name: "Анна", subject: "Хімія", score: 85 },
+//       { name: "Дмитро", subject: "Історія", score: 88 },
+//       { name: "Олена", subject: "Література", score: 76 }
+//   ]);
+
+//   const highScores = await collection.find({ score: { $gt: 80 } }).toArray();
+//   console.log("Документы с score > 80:", highScores);
+
+//   await collection.updateOne({ score: { $lt: 85 } }, { $inc: { score: 5 } });
+
+//   const minDoc = await collection.findOne({}, { sort: { score: 1 } });
+//   await collection.deleteOne({ _id: minDoc._id });
+
+//   await client.close();
+// }
+
+// main();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
